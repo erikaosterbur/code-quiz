@@ -1,0 +1,56 @@
+* {
+    box-sizing: border-box;
+    font-family: Optima, Verdana, Geneva, Tahoma, sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+body h1 {
+    font-size: 40px;
+    padding: 20px;
+}
+
+body p {
+    font-size: 30px;
+    padding: 10px;
+}
+
+body h3 {
+    font-size: 35px;
+    padding: 10px;
+}
+
+body button {
+    font-size: 30px;
+    padding: 10px;
+    color: white;
+    background-color: rgb(10, 44, 10);
+    box-shadow: 10px 5px 5px lightgray;
+    border-radius: 15px;
+    letter-spacing: 5px;
+}
+
+body #main-page {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 70px;
+}
+
+header #highscore {
+   display: inline-block;
+   font-size: 25px;
+   margin: 50px;
+}
+
+header #countdown {
+    
+}
+
+ul li button {
+    padding: 10px;
+    font-size: 30px;
+    display: none;
+}
+
