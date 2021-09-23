@@ -18,122 +18,41 @@
 // After all questions OR after time runs out, show user their score
 // High score tracking
 
-// var mainPage = document.getElementById("main-page");
-// var timerEl = document.getElementById("countdown");
-// var startBtn = document.getElementById("startBtn");
-// var question = document.getElementById("question");
-// var option1 = document.getElementById("option1");
-// var option2 = document.getElementById("option2");
-// var option3 = document.getElementById("option3");
-// var option4 = document.getElementById("option4");
-// var score = 0;
-// var questions = [
-//     {
-//     questionText: "What is the capital of Nigeria?" ,
-//     choices: ["Kano", "Ibadan", "Lagos", "Abuja"] ,
-//     answer: "Abuja"
-//     },
-//     {
-//     questionText: "How many islands are in the Philippines?" ,
-//     choices: ["579", "7,640", "20,999", "28"] ,
-//     answer: "7,640"
-//     },
-//     {
-//     questionText: "Monaco is located in which continent?" ,
-//     choices: ["Europe", "Asia", "Africa", "Oceana"] ,
-//     answer: "Europe"
-//     },
-//     {
-//     questionText: "Which are the only two landlocked countries in South America?" ,
-//     choices: ["Colombia & Paraguay", "Paraguay & Bolivia", "Bolivia & Uruguay", "Colombia & Uruguay"] ,
-//     answer: "7,640"
-//     },
-// ];
-// var currentQuestionIndex = 0;
-
-
-// // on click, the startGame function begins
-// function startGame() {
-
-//     // makes the title, instructions, and start button disappear
-//      mainPage.setAttribute("style", "display: none")
-
-//     //  countdown begins function 
-//         var timeLeft = 60;
-//         function callback() { 
-//             timeLeft--;
-//             timerEl.textContent = "Time: " + timeLeft;
-//         if (timeLeft === 0) {
-//             clearInterval(timerInterval);
-//             timerEl.textContent = "Time is up!";
-//         }
-//         }
-//     var timerInterval = setInterval(callback, 1000);
-//     };
-
-
-//     // if (answer.clicked == true) {
-//     //     score ++;
-//     // } 
-//     // else {
-//     //     timeLeft - 10;
-//     // }
-
-
-//     function askQuestion() {
-//         var currentQuestion = questions[currentQuestionIndex]
-//         question = currentQuestion.questionText;
-//         option1 = currentQuestion.choices[0];
-//         option2 = currentQuestion.choices[1];
-//         option3 = currentQuestion.choices[2];
-//         option4 = currentQuestion.choices[3];
-        
-    
-//     }
-
-// submitAnswer.addEventListener("click", checkAnswer) //checkAnswer callback function & advance currentQuestionIndex
-
-// // if (checkAnswer === true) {
-// //     score ++;
-// //     else {
-// //     timeLeft -10;
-// //     }
-// // };
-
-
 var mainPage = document.getElementById("main-page");
 var timerEl = document.getElementById("countdown");
 var startBtn = document.getElementById("startBtn");
+var questionText = document.getElementById("question");
+var optionList = document.getElementById("option-list");
+var optionOne = document.getElementById("option1");
+var optionTwo = document.getElementById("option2");
+var optionThree = document.getElementById("option3");
+var optionFour = document.getElementById("option4");
 var score = 0;
-var numQuestions = 0;
-var answerDiv = document.getElementById('answers');
-var questionDiv = document.getElementById('question');
-var numRightSpan = document.getElementById('numRight');
-var numQuestionsSpan = document.getElementById('numQuestions');
+var questions = [
+    {
+    questionText: "What is the capital of Nigeria?" ,
+    options: ["Kano", "Ibadan", "Lagos", "Abuja"] ,
+    answer: "Abuja"
+    },
+    {
+    questionText: "How many islands are in the Philippines?" ,
+    options: ["579", "7,640", "20,999", "28"] ,
+    answer: "7,640"
+    },
+    {
+    questionText: "Monaco is located in which continent?" ,
+    options: ["Europe", "Asia", "Africa", "Oceana"] ,
+    answer: "Europe"
+    },
+    {
+    questionText: "Which are the only two landlocked countries in South America?" ,
+    options: ["Colombia & Paraguay", "Paraguay & Bolivia", "Bolivia & Uruguay", "Colombia & Uruguay"] ,
+    answer: "Paraguay & Bolivia"
+    },
+];
+var currentQuestionIndex = 0;
 
 
-questions = [
-    {
-        question: "What is the capital of Nigeria?" ,
-        options: ["Kano", "Ibadan", "Lagos", "Abuja"],
-        answerIdx: 3
-    },
-    {
-        question: "How many islands are in the Philippines?" ,
-        options: ["579", "7,640", "20,999", "28"],
-        answerIdx: 1
-    },
-    {
-        question: "Monaco is located in which continent?" ,
-        options: ["Europe", "Asia", "Africa", "Oceana"],
-        answerIdx: 0
-    },
-    {
-        question: "Which are the only two landlocked countries in South America?" ,
-        options: ["Colombia & Paraguay", "Paraguay & Bolivia", "Bolivia & Uruguay", "Colombia & Uruguay"],
-        answerIdx: 1
-    }, 
-]
 // on click, the startGame function begins
 function startGame() {
 
@@ -141,56 +60,59 @@ function startGame() {
      mainPage.setAttribute("style", "display: none")
 
     //  countdown begins function 
-         var timeLeft = 60;
-         function callback() { 
-             timeLeft--;
-             timerEl.textContent = "Time: " + timeLeft;
+        var timeLeft = 60;
+        function callback() { 
+            timeLeft--;
+            timerEl.textContent = "Time: " + timeLeft;
         if (timeLeft === 0) {
             clearInterval(timerInterval);
             timerEl.textContent = "Time is up!";
         }
-        }
-     var timerInterval = setInterval(callback, 1000);
-     
-    function displayQuestion(q) {  
-    // insert the question
-    questionDiv.innerHTML = q.question;
+    }
+    var timerInterval = setInterval(callback, 1000);
 
-    // remove any pre-existing answer buttons
-    answerDiv.innerHTML = '';
-
-    // for each option in the 'options' array, create a button
-    // attach an 'onclick' event handler that will update
-    // the question counts and display the next question in the array
-    for(i = 0; i < q.options.length; i++) {
-        btn = document.createElement('button');
-        btn.innerHTML = q.options[i];
-        btn.setAttribute("id",i);
-
-        // event handler for each answer button
-        btn.onclick = function() {
-            var id = parseInt(this.getAttribute("id"));
-            numQuestionsSpan.innerHTML = ++numQuestions;
-
-            // if this is the right answer, increment score; wrong answer, deduct time
-            if(id === q.answerIdx) {
-                ++score;
+    // Function to ask the questions
+    function quizQuestions() {
+        // Loads question text:  
+        var currentQuestion = questions[0];
+        questionText.textContent = currentQuestion.questionText;
+        optionOne.textContent = currentQuestion.options[0];
+        optionTwo.textContent = currentQuestion.options[1];
+        optionThree.textContent = currentQuestion.options[2];
+        optionFour.textContent = currentQuestion.options[3];
+        
+        //Event listener for click on answers:
+        optionList.addEventListener("click", function(event) {
+            var userAnswer = event.target;  
+            var currentQuestion = questions[currentQuestionIndex];
+            if (userAnswer.textContent === currentQuestion.answer) {
+            score++;
+            console.log(score);
+            } 
+            else {
+            timeLeft - 10;
+            }
+        
+            currentQuestionIndex++;
+    
+            if (currentQuestionIndex < questions.length){ 
+            currentQuestion = questions[currentQuestionIndex];
+            questionText.textContent = currentQuestion.questionText;
+            optionOne.textContent = currentQuestion.options[0];
+            optionTwo.textContent = currentQuestion.options[1];
+            optionThree.textContent = currentQuestion.options[2];
+            optionFour.textContent = currentQuestion.options[3];
             }
             else {
-                timeLeft - 10;
-            }
-
-            // if there is another question to be asked, run the function again
-            // otherwise, complete the test
-            if(questions.length) {
-                displayQuestion(questions.shift()); 
-            } else {
-                alert("You got " + score + "of " + numQuestions + " right! Click Ok to enter your initials on the scoreboard.");
-                window.location.href = "";
-            }                    
-        }
-        answerDiv.appendChild(btn);        
-    }
-}
-displayQuestion(questions.shift());
+                endGame();
+            };
+        });
+    };
+    quizQuestions();
 };
+
+function endGame() {
+    console.log("The game has ended");
+    
+
+}

@@ -55,23 +55,9 @@ header #countdown {
     margin: 50px;
 }
 
-#question {
-    font-size: 35px;
-    padding: 20px;
-}
 
-div #answers {
-    display: flex;
-    flex-direction: column;
-    column-gap: 10px;
-
-
-}
-
-
-/* ul li button {
+ul li {
     padding: 10px;
     font-size: 30px;
-    display: none;
-} */
+}
 
