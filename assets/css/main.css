@@ -22,7 +22,7 @@ body h3 {
 
 body button {
     font-size: 30px;
-    padding: 10px;
+    padding: 20px;
     color: white;
     background-color: rgb(10, 44, 10);
     box-shadow: 10px 5px 5px lightgray;
@@ -38,6 +38,11 @@ body #main-page {
     margin-top: 70px;
 }
 
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
 header #highscore {
    display: inline-block;
    font-size: 25px;
@@ -45,12 +50,28 @@ header #highscore {
 }
 
 header #countdown {
-    
+    display: inline-block;
+    font-size: 25px;
+    margin: 50px;
 }
 
-ul li button {
+#question {
+    font-size: 35px;
+    padding: 20px;
+}
+
+div #answers {
+    display: flex;
+    flex-direction: column;
+    column-gap: 10px;
+
+
+}
+
+
+/* ul li button {
     padding: 10px;
     font-size: 30px;
     display: none;
-}
+} */
 
