@@ -17,7 +17,14 @@ body p {
 
 body h3 {
     font-size: 35px;
-    padding: 10px;
+    padding: 7px;
+    margin: 50px;
+}
+
+body h4 {
+    font-size: 30px;
+    padding: 7px;
+    margin: 50px;
 }
 
 body button {
@@ -55,9 +62,14 @@ header #countdown {
     margin: 50px;
 }
 
-
-ul li {
+#quiz-area {
+    display: none;
     padding: 10px;
     font-size: 30px;
 }
 
+#score-form {
+    display: none;
+    margin: 50px;
+    font-size: 20px;
+}

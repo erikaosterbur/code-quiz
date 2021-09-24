@@ -21,98 +21,99 @@
 var mainPage = document.getElementById("main-page");
 var timerEl = document.getElementById("countdown");
 var startBtn = document.getElementById("startBtn");
-var questionText = document.getElementById("question");
-var optionList = document.getElementById("option-list");
-var optionOne = document.getElementById("option1");
-var optionTwo = document.getElementById("option2");
-var optionThree = document.getElementById("option3");
-var optionFour = document.getElementById("option4");
-var score = 0;
+var answerDiv = document.getElementById("answers");
+var questionDiv = document.getElementById("question");
+var scoreSpan = document.getElementById("score");
+var quizArea = document.getElementById("quiz-area");
+var submitEl = document.getElementById("submit");
+var scoreForm = document.getElementById("score-form");
+var endOfQuiz = document.getElementById("end-of-quiz");
 var questions = [
-    {
-    questionText: "What is the capital of Nigeria?" ,
-    options: ["Kano", "Ibadan", "Lagos", "Abuja"] ,
-    answer: "Abuja"
-    },
-    {
-    questionText: "How many islands are in the Philippines?" ,
-    options: ["579", "7,640", "20,999", "28"] ,
-    answer: "7,640"
-    },
-    {
-    questionText: "Monaco is located in which continent?" ,
-    options: ["Europe", "Asia", "Africa", "Oceana"] ,
-    answer: "Europe"
-    },
-    {
-    questionText: "Which are the only two landlocked countries in South America?" ,
-    options: ["Colombia & Paraguay", "Paraguay & Bolivia", "Bolivia & Uruguay", "Colombia & Uruguay"] ,
-    answer: "Paraguay & Bolivia"
-    },
-];
-var currentQuestionIndex = 0;
+        {
+        question: "What is the capital of Nigeria?" ,
+        options: ["Kano", "Ibadan", "Lagos", "Abuja"] ,
+        answerIdx: "Abuja"
+        },
+        {
+        question: "How many islands are in the Philippines?" ,
+        options: ["579", "7,640", "20,999", "28"] ,
+        answerIdx: "7,640"
+        },
+        {
+        question: "Monaco is located in which continent?" ,
+        options: ["Europe", "Asia", "Africa", "Oceana"] ,
+        answerIdx: "Europe"
+        },
+        {
+        question: "Which are the only two landlocked countries in South America?" ,
+        options: ["Colombia & Paraguay", "Paraguay & Bolivia", "Bolivia & Uruguay", "Colombia & Uruguay"] ,
+        answerIdx: "Paraguay & Bolivia"
+        }
+    ];
+
+    function startGame() {
+
+        // makes the title, instructions, and start button disappear
+        mainPage.setAttribute("style", "display: none")
+        scoreSpan = parseInt(scoreSpan);
 
 
-// on click, the startGame function begins
-function startGame() {
-
-    // makes the title, instructions, and start button disappear
-     mainPage.setAttribute("style", "display: none")
-
-    //  countdown begins function 
+        //  countdown begins function 
         var timeLeft = 60;
         function callback() { 
             timeLeft--;
             timerEl.textContent = "Time: " + timeLeft;
-        if (timeLeft === 0) {
+        if (timeLeft <= 0) {
             clearInterval(timerInterval);
+            endGame();             
             timerEl.textContent = "Time is up!";
+            }
         }
-    }
-    var timerInterval = setInterval(callback, 1000);
+        var timerInterval = setInterval(callback, 1000);
 
-    // Function to ask the questions
-    function quizQuestions() {
-        // Loads question text:  
-        var currentQuestion = questions[0];
-        questionText.textContent = currentQuestion.questionText;
-        optionOne.textContent = currentQuestion.options[0];
-        optionTwo.textContent = currentQuestion.options[1];
-        optionThree.textContent = currentQuestion.options[2];
-        optionFour.textContent = currentQuestion.options[3];
-        
-        //Event listener for click on answers:
-        optionList.addEventListener("click", function(event) {
-            var userAnswer = event.target;  
-            var currentQuestion = questions[currentQuestionIndex];
-            if (userAnswer.textContent === currentQuestion.answer) {
-            score++;
-            console.log(score);
-            } 
-            else {
-            timeLeft - 10;
-            }
-        
-            currentQuestionIndex++;
+        function askQuestion(q) {  
+
+            quizArea.setAttribute("style", "display: block");
+       
+            questionDiv.innerHTML = q.question;
+
+            answerDiv.innerHTML = '';
     
-            if (currentQuestionIndex < questions.length){ 
-            currentQuestion = questions[currentQuestionIndex];
-            questionText.textContent = currentQuestion.questionText;
-            optionOne.textContent = currentQuestion.options[0];
-            optionTwo.textContent = currentQuestion.options[1];
-            optionThree.textContent = currentQuestion.options[2];
-            optionFour.textContent = currentQuestion.options[3];
-            }
-            else {
-                endGame();
-            };
-        });
+            for(i = 0; i < q.options.length; i++) {
+                var btn = document.createElement('button');
+                btn.innerHTML = q.options[i];
+                btn.setAttribute('id', i);
+    
+                btn.addEventListener("click", function(event) {
+                    var userSelection = event.target;
+                        if(userSelection === q.answerIdx) {
+                        scoreSpan.innerHTML = score + 10;
+                        }
+                        else {
+                        timeLeft = timeLeft - 20;
+                        }
+    
+                        if(questions.length) {
+                        askQuestion(questions.shift()); 
+                        } 
+                        else {
+                        endGame();
+                        }                
+                    }     
+                )               
+            
+                answerDiv.appendChild(btn);
+                  
+            }     
+        } 
+        askQuestion(questions.shift());
     };
-    quizQuestions();
-};
 
-function endGame() {
-    console.log("The game has ended");
-    
 
-}
+    function endGame() {
+        quizArea.setAttribute("style", "display: none");
+        scoreForm.setAttribute("style", "display: block");
+        endOfQuiz.textContent = "Done! Your score: " + scoreSpan;
+
+    }
+

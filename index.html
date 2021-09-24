@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌎 Quiz!</title>
+    <link rel="stylesheet" href="./assets/css/main.css" />
+    <link rel="stylesheet" href="./assets/css/reset.css">
+</head>
+<body>
+
+    <header>
+        <a id = "highscore" href="./main/highscore.html">View High Scores</a>
+        <h3 id = "countdown">Time: 60</h3>
+    </header>
+    
+    
+    <div id = "main-page">
+        <h1>🌍 Welcome to the Ultimate Geography Quiz Challenge! 🗺</h1>
+        <p>Answer each question to the best of your abilities.</p>
+        <p>You have 60 seconds to try and answer all 4 questions.</p>
+        <p>If you answer a question incorrectly, 20 seconds will be deducted from the remaining time.</p>
+        <h3>Good Luck!</h3>
+        <button id = "startBtn" onclick="startGame()">Click here to begin</button>
+    </div>
+
+
+    <div id="quiz-area">
+        <div>Score: <span id="score">0</span></div>
+        <h3 id="question"></h3>
+        <div id = "answers"></div>
+    </div>
+
+    <div id = "score-form">
+        <h3 id = "end-of-quiz"></h3>
+        <h4>Enter your initials </h4>
+        <form action="main/highscore.html">
+            <label for="initials">Initials:</label><br>
+            <input type="text" id="initials" value="initials"><br>
+            <button type="submit" id="submit">Submit</button>
+        </form>
+    </div>
+    
+    <!-- javascript go to html page, store in local storage --> 
+
+
+    <script src = "./assets/js/main.js"></script>
+    
+</body>
+</html>
