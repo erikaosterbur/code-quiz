@@ -23,11 +23,13 @@ var timerEl = document.getElementById("countdown");
 var startBtn = document.getElementById("startBtn");
 var answerDiv = document.getElementById("answers");
 var questionDiv = document.getElementById("question");
+var displayScore = document.getElementById("display-score");
 var scoreSpan = document.getElementById("score");
 var quizArea = document.getElementById("quiz-area");
 var submitEl = document.getElementById("submit");
 var scoreForm = document.getElementById("score-form");
 var endOfQuiz = document.getElementById("end-of-quiz");
+var timerInterval = "";
 var questions = [
         {
         question: "What is the capital of Nigeria?" ,
@@ -56,6 +58,8 @@ var questions = [
         // makes the title, instructions, and start button disappear
         mainPage.setAttribute("style", "display: none")
         scoreSpan = parseInt(scoreSpan);
+        scoreSpan = 0;
+        console.log(scoreSpan);
 
 
         //  countdown begins function 
@@ -69,7 +73,7 @@ var questions = [
             timerEl.textContent = "Time is up!";
             }
         }
-        var timerInterval = setInterval(callback, 1000);
+        timerInterval = setInterval(callback, 1000);
 
         function askQuestion(q) {  
 
@@ -86,8 +90,9 @@ var questions = [
     
                 btn.addEventListener("click", function(event) {
                     var userSelection = event.target;
-                        if(userSelection === q.answerIdx) {
-                        scoreSpan.innerHTML = score + 10;
+                        if(userSelection.textContent === q.answerIdx) {
+                        scoreSpan = scoreSpan + 10;
+                        displayScore.textContent = "Score: " + scoreSpan;
                         }
                         else {
                         timeLeft = timeLeft - 20;
@@ -101,16 +106,17 @@ var questions = [
                         }                
                     }     
                 )               
-            
                 answerDiv.appendChild(btn);
-                  
-            }     
+            }  
+            console.log(scoreSpan);   
         } 
         askQuestion(questions.shift());
     };
 
 
     function endGame() {
+        clearInterval(timerInterval);
+        timerEl.textContent = "Time is up!"
         quizArea.setAttribute("style", "display: none");
         scoreForm.setAttribute("style", "display: block");
         endOfQuiz.textContent = "Done! Your score: " + scoreSpan;
