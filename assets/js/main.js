@@ -1,23 +1,4 @@
-// I have a bunch of quiz questions to ask
-// What is the best way to store all of those questions, plus the correct answer for each one
-// For each question in the quiz:
-    // The question itself
-    // The possible answers (4 for each one)
-    // Which answer is correct
-
-// Have a process where (call this process every time user is ready for new question):
-    // When the game starts a coutdown begins
-    // A question is selected from the collection you have
-    // All the elements are added to the DOM
-    // The user will click on one of the answers (list element with buttons)
-    // Detect that click and determine if the user clicked on the right answer
-        // If yes, add some points to user's total
-        // If no, subtract 10 seconds from time remaining
-        // Then go to next question
-
-// After all questions OR after time runs out, show user their score
-// High score tracking
-
+// selectors
 var mainPage = document.getElementById("main-page");
 var timerEl = document.getElementById("countdown");
 var startBtn = document.getElementById("startBtn");
@@ -26,9 +7,13 @@ var questionDiv = document.getElementById("question");
 var displayScore = document.getElementById("display-score");
 var scoreSpan = document.getElementById("score");
 var quizArea = document.getElementById("quiz-area");
-var submitEl = document.getElementById("submit");
+var submitBtn = document.getElementById("submit");
 var scoreForm = document.getElementById("score-form");
 var endOfQuiz = document.getElementById("end-of-quiz");
+var initials = document.getElementById("initials");
+var playAgain = document.getElementById("play-again");
+
+//global variables
 var timerInterval = "";
 var questions = [
         {
@@ -57,10 +42,10 @@ var questions = [
 
         // makes the title, instructions, and start button disappear
         mainPage.setAttribute("style", "display: none")
+        // turns score into number
         scoreSpan = parseInt(scoreSpan);
+        // sets beginning score to 0
         scoreSpan = 0;
-        console.log(scoreSpan);
-
 
         //  countdown begins function 
         var timeLeft = 60;
@@ -75,51 +60,75 @@ var questions = [
         }
         timerInterval = setInterval(callback, 1000);
 
+        // function that triggers new questions and listens for user click on one option
         function askQuestion(q) {  
-
+            // displays the quiz area
             quizArea.setAttribute("style", "display: block");
-       
+            // shows next question
             questionDiv.innerHTML = q.question;
-
+            //clears previous buttons 
             answerDiv.innerHTML = '';
-    
+            // creates buttons for each option
             for(i = 0; i < q.options.length; i++) {
                 var btn = document.createElement('button');
                 btn.innerHTML = q.options[i];
                 btn.setAttribute('id', i);
-    
+                // listens for user click on answer
                 btn.addEventListener("click", function(event) {
                     var userSelection = event.target;
+                        // if user clicks on correct answer, adds 10 to score
                         if(userSelection.textContent === q.answerIdx) {
                         scoreSpan = scoreSpan + 10;
                         displayScore.textContent = "Score: " + scoreSpan;
                         }
+                        // if user clicks on incorrect answer, timer deducts 20 seconds
                         else {
                         timeLeft = timeLeft - 20;
                         }
-    
+                        // if there are more questions, askQuestion function starts over
                         if(questions.length) {
                         askQuestion(questions.shift()); 
                         } 
+                        // if no more questions, end game
                         else {
                         endGame();
                         }                
                     }     
-                )               
+                )      
+                // adds buttons for options to page        
                 answerDiv.appendChild(btn);
-            }  
-            console.log(scoreSpan);   
+            }     
         } 
         askQuestion(questions.shift());
     };
 
-
     function endGame() {
+        // clears time left and quiz question and option buttons
         clearInterval(timerInterval);
         timerEl.textContent = "Time is up!"
         quizArea.setAttribute("style", "display: none");
-        scoreForm.setAttribute("style", "display: block");
-        endOfQuiz.textContent = "Done! Your score: " + scoreSpan;
 
+        //this part doesn't work, and I'm not sure why. Some feedback would be great! 
+        if ((localStorage.getItem)("score") < scoreSpan) {
+            //displays form for user to enter initials
+            scoreForm.setAttribute("style", "display: block");
+             // displays final score
+            endOfQuiz.textContent = "Done! Your score: " + scoreSpan;
+            // stores score in local storage
+            localStorage.setItem("score", JSON.stringify(scoreSpan));
+            //upon clicking "submit," stores initials entered into local storage and brings user to highscore page
+            submitBtn.addEventListener("click", function storeInitials(event){
+                localStorage.setItem("initials", JSON.stringify(initials.value));
+                });
+        }   
+        else {
+             // displays final score
+             endOfQuiz.textContent = "Done! Your score: " + scoreSpan + ". You did not beat the highscore. Play again?";
+             var playAgainBtn = document.createElement('button');
+             playAgainBtn.innerHTML.textContent = "Play Again";
+             playAgainBtn.addEventListener("click", function startGameAgain(event){
+                    startGame();
+             })
+             playAgain.appendChild(playAgainBtn);
+        }
     }
-

@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌎 Quiz!</title>
+    <title>🌎 Geography Quiz</title>
     <link rel="stylesheet" href="./assets/css/main.css" />
     <link rel="stylesheet" href="./assets/css/reset.css">
 </head>
 <body>
 
     <header>
-        <a id = "highscore" href="./main/highscore.html">View High Scores</a>
+        <a id = "highscore" href="./main/highscore.html">View High Score</a>
         <h3 id = "countdown">Time: 60</h3>
     </header>
     
@@ -34,15 +34,17 @@
 
     <div id = "score-form">
         <h3 id = "end-of-quiz"></h3>
-        <h4>Enter your initials </h4>
-        <form action="main/highscore.html">
+        <h4>Enter your initials for the scoreboard</h4>
+        <form action="./main/highscore.html">
             <label for="initials">Initials:</label><br>
-            <input type="text" id="initials" value="initials"><br>
-            <button type="submit" id="submit">Submit</button>
+            <input type="text" id="initials" ><br>
+            <button type="submit" value="submit" id="submit">Submit</button>
         </form>
     </div>
+
+    <div id = "play-again"></div>
     
-    <!-- javascript go to html page, store in local storage --> 
+
 
 
     <script src = "./assets/js/main.js"></script>
