@@ -107,28 +107,39 @@ var questions = [
         clearInterval(timerInterval);
         timerEl.textContent = "Time is up!"
         quizArea.setAttribute("style", "display: none");
+        //displays form for user to enter initials
+        scoreForm.setAttribute("style", "display: block");
+        // displays final score
+       endOfQuiz.textContent = "Done! Your score: " + scoreSpan;
+       // stores score in local storage
+       localStorage.setItem("score", JSON.stringify(scoreSpan));
+       //upon clicking "submit," stores initials entered into local storage and brings user to highscore page
+       submitBtn.addEventListener("click", function storeInitials(event){
+           localStorage.setItem("initials", JSON.stringify(initials.value));
+           });
+    }
 
         //this part doesn't work, and I'm not sure why. Some feedback would be great! 
-        if ((localStorage.getItem)("score") < scoreSpan) {
-            //displays form for user to enter initials
-            scoreForm.setAttribute("style", "display: block");
-             // displays final score
-            endOfQuiz.textContent = "Done! Your score: " + scoreSpan;
-            // stores score in local storage
-            localStorage.setItem("score", JSON.stringify(scoreSpan));
-            //upon clicking "submit," stores initials entered into local storage and brings user to highscore page
-            submitBtn.addEventListener("click", function storeInitials(event){
-                localStorage.setItem("initials", JSON.stringify(initials.value));
-                });
-        }   
-        else {
-             // displays final score
-             endOfQuiz.textContent = "Done! Your score: " + scoreSpan + ". You did not beat the highscore. Play again?";
-             var playAgainBtn = document.createElement('button');
-             playAgainBtn.innerHTML.textContent = "Play Again";
-             playAgainBtn.addEventListener("click", function startGameAgain(event){
-                    startGame();
-             })
-             playAgain.appendChild(playAgainBtn);
-        }
-    }
+    //     if ((localStorage.getItem)("score") < scoreSpan) {
+    //         //displays form for user to enter initials
+    //         scoreForm.setAttribute("style", "display: block");
+    //          // displays final score
+    //         endOfQuiz.textContent = "Done! Your score: " + scoreSpan;
+    //         // stores score in local storage
+    //         localStorage.setItem("score", JSON.stringify(scoreSpan));
+    //         //upon clicking "submit," stores initials entered into local storage and brings user to highscore page
+    //         submitBtn.addEventListener("click", function storeInitials(event){
+    //             localStorage.setItem("initials", JSON.stringify(initials.value));
+    //             });
+    //     }   
+    //     else {
+    //          // displays final score
+    //          endOfQuiz.textContent = "Done! Your score: " + scoreSpan + ". You did not beat the highscore. Play again?";
+    //          var playAgainBtn = document.createElement('button');
+    //          playAgainBtn.innerHTML.textContent = "Play Again";
+    //          playAgainBtn.addEventListener("click", function startGameAgain(event){
+    //                 startGame();
+    //          })
+    //          playAgain.appendChild(playAgainBtn);
+    //     }
+    // }
