@@ -9,13 +9,13 @@ var playAgain = document.getElementById("play-again");
 
 console.log("Initials: " + initials + "Score: " + score);
 
+//Displays current high score and play again button
 function highScore(){
     currentHighScore.textContent = "Initials: " + initials + " Score: " + score;
-    //play again button doesn't quite work how I want. I'm not sure how to make it go back to the home page
     var playAgainBtn = document.createElement('button');
              playAgainBtn.textContent = "Play Again";
              playAgainBtn.onclick = function () {
-                location.href = "https://erikaosterbur.github.io/code-quiz/";
+                window.location.href = "../index.html";
     }
     playAgain.appendChild(playAgainBtn);
 }
