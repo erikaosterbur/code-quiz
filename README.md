@@ -1,8 +1,8 @@
-# Homework 4: Code Quiz
+# Code Quiz
 
 ## Objectives
 
-Have a functioning quiz that is timed and stores high scores.
+Have a functioning quiz that is timed and stores high scores in local storage.
 Display questions one at a time and provide multiple choice answers.
 If the correct answer is chosen, the user gets 10 points.
 If the incorrect answer is chosen, the timer gets deducted by 20 seconds.
